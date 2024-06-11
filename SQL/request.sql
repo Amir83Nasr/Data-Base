@@ -15,7 +15,7 @@ USE `football_leagues`;
 
 -- ———————————––––––––––––––(Team)-----------------------------------
 
-SELECT mch.home_team, mch.away_team, mti.match_date, mti.team_arrange, mti.goals_score, mti.goals_concede
+SELECT mch.home_team, mch.away_team, mch.week_of_league, mti.match_date, mti.team_arrange, mti.goals_score, mti.goals_concede
 FROM `match_team_information` mti
 JOIN `match` mch ON (mti.match_stadium = mch.stadium_name) AND (mti.match_date = mch.match_date)
 WHERE mti.team_name = 'Perspolis'
