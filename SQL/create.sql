@@ -142,7 +142,7 @@ CREATE TABLE `spectator` (
 
 CREATE TABLE `referee_team` (
     `referee_team_id` INT NOT NULL AUTO_INCREMENT,
-    `referee_team_rate` DECIMAL NOT NULL DEFAULT 0,
+    `referee_team_rate` DECIMAL(3, 1) NOT NULL DEFAULT 0,
     `main_referee` VARCHAR(50) NOT NULL,
     `right_referee` VARCHAR(50) NOT NULL,
     `left_referee` VARCHAR(50) NOT NULL,
@@ -205,7 +205,7 @@ CREATE TABLE `match_player_information` (
     `player_ssn` INT NOT NULL,
     `team_name` VARCHAR(50) NOT NULL,
     `player_post` VARCHAR(3) NOT NULL,
-    `player_rate` DECIMAL NOT NULL DEFAULT 5.00,
+    `player_rate` DECIMAL(3, 1) NOT NULL DEFAULT 5.00,
     `player_injury` VARCHAR(3) DEFAULT 'NO',
     FOREIGN KEY (`match_stadium`, `match_date`) REFERENCES `match` (`stadium_name`, `match_date`),
     FOREIGN KEY (`team_name`) REFERENCES `team` (`team_name`),
