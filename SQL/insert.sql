@@ -157,6 +157,8 @@ INSERT INTO `match_team_information`
 VALUES
     ('Azadi', '2024-08-23', 'Perspolis', 'Home', '4-3-1-2', 2, 2, 58, DEFAULT),
     ('Azadi', '2024-08-23', 'Esteghlal', 'Away', '4-3-3', 2, 2, 35, NULL),
+    ('Azadi', '2025-02-25', 'Esteghlal', 'Home', '4-3-3', 0, 1, 35, NULL),
+    ('Azadi', '2025-02-25', 'Perspolis', 'Away', '4-3-1-2', 1, 0, 58, DEFAULT),
     ('Naghsh-e-Jahan', '2024-07-12', 'Sepahan', 'Home', '4-4-2', 3, 0, 91, NULL),
     ('Naghsh-e-Jahan', '2024-07-12', 'Peikan', 'Away', '3-5-2', 0, 3, 14, 'Yellow'),
     ('Shahid Dast-gerdi', '2024-10-06', 'Havadar', 'Home', '4-3-3', 0, 0, 14, NULL),

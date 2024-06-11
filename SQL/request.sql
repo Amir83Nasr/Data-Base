@@ -14,19 +14,36 @@ USE `football_leagues`;
 -- ———————————–––––––––––––––(02)------------------------------------
 
 -- ———————————––––––––––––––(Team)-----------------------------------
+
+SELECT mch.home_team, mch.away_team, mti.match_date, mti.team_arrange, mti.goals_score, mti.goals_concede
+FROM `match_team_information` mti
+JOIN `match` mch ON (mti.match_stadium = mch.stadium_name) AND (mti.match_date = mch.match_date)
+WHERE mti.team_name = 'Perspolis'
+ORDER BY mch.match_date DESC
+
 -- ———————————–––––––––––––––(01)------------------------------------
--- ———————————–––––––––––––––(02)------------------------------------
+-- todo———————————–––––––––––––––(02)------------------------------------
+
+SELECT tm.team_name, pl.player_number, pl.player_name, pl.player_age, pl.player_salary, tr.in_date, tr.out_team, tr.transfer_fee, tr.duration_agreement
+FROM `team` tm
+JOIN `player` pl ON tm.team_name = pl.team_name
+JOIN `transfer` tr ON pl.player_ssn = tr.player_ssn
+-- WHERE tm.team_name = 'Perspolis'
+ORDER BY tm.team_name, tr.in_date DESC, pl.player_name
+
 -- ———————————–––––––––––––––(03)------------------------------------
 
 SELECT tm.team_name, co.coach_name AS `coach_name`, co.coach_age, co.coach_salary, co.in_date, co.duration_agreement
 FROM `team` tm
 LEFT JOIN `coach` co ON tm.team_name = co.team_name
+-- WHERE tm.team_name = 'Perspolis'
 
 -- ———————————–––––––––––––––(04)------------------------------------
 
 SELECT tm.team_name, st.staff_name, st.staff_age, st.staff_job, st.staff_salary, st.in_date, st.duration_agreement
 FROM `team` tm
 JOIN `staff` st ON tm.team_name = st.team_name
+-- WHERE tm.team_name = 'Perspolis'
 ORDER BY tm.team_name, st.staff_name
 
 -- ———————————–––––––––––––––(05)------------------------------------
