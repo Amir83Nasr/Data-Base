@@ -4,6 +4,10 @@ USE `football_leagues`;
 
 -- ———————————––––––––––––––(Game)-----------------------------------
 
+SELECT *
+FROM `match_player_information` mpi
+
+
 -- ———————————–––––––––––––––(01)------------------------------------
 -- ———————————–––––––––––––––(02)------------------------------------
 -- ———————————–––––––––––––––(03)------------------------------------
@@ -12,9 +16,7 @@ USE `football_leagues`;
 
 -- ———————————–––––––––––––(Player)----------------------------------
 
-SELECT pl.player_name, mpi.team_name, COUNT(mpi.team_name) AS `games`, ROUND(AVG(mpi.player_rate), 1) AS `rate`
-, tot.out_team
--- SELECT *
+SELECT pl.player_name, mpi.team_name, COUNT(mpi.team_name) AS `games`, toa.goals, ROUND(AVG(mpi.player_rate), 1) AS `rate`, tot.out_team, tot.in_team, tot.player_salary, tot.in_date, tot.transfer_fee, tot.duration_agreement
 FROM `match_player_information` mpi
 JOIN `player` pl ON mpi.player_ssn = pl.player_ssn
 JOIN (
@@ -23,28 +25,31 @@ JOIN (
     JOIN `transfer` tr ON pl.player_ssn = tr.player_ssn
     WHERE pl.player_name = 'Mehdi Torabi'
 ) tot ON pl.player_name = tot.player_name AND mpi.team_name = tot.in_team
+JOIN (
+    SELECT ps.player_ssn, COUNT(ps.player_ssn) AS `goals`
+    FROM `pleyer_scores` ps
+    GROUP BY ps.player_ssn
+) toa ON mpi.player_ssn = toa.player_ssn
 WHERE pl.player_name = 'Mehdi Torabi'
-GROUP BY mpi.team_name, tot.out_team
-
-SELECT pl.player_name, pl.player_salary, tr.out_team, tr.in_team, tr.in_date, tr.transfer_fee, tr.duration_agreement
-FROM `player` pl
-JOIN `transfer` tr ON pl.player_ssn = tr.player_ssn
-WHERE pl.player_name = 'Mehdi Torabi'
+GROUP BY mpi.team_name, pl.player_name, tot.player_salary, tot.out_team, tot.in_team, tot.in_date, tot.transfer_fee, tot.duration_agreement, toa.goals
 
 -- ———————————–––––––––––––––(01)------------------------------------
 
-SELECT pl.player_name, mpi.team_name, COUNT(mpi.team_name) AS `games`, ROUND(AVG(mpi.player_rate), 1) AS `rate`
+SELECT pl.player_name, tm.league_name, mpi.team_name, COUNT(mpi.team_name) AS `games`, ROUND(AVG(mpi.player_rate), 1) AS `rate`, tot.goals, MIN(mpi.match_date) AS first_play_date, MAX(mpi.match_date) AS last_play_date
 -- SELECT *
 FROM `match_player_information` mpi
 JOIN `player` pl ON mpi.player_ssn = pl.player_ssn
--- JOIN `pleyer_scores` ps ON mpi.player_ssn = ps.player_ssn
+JOIN `team` tm ON mpi.team_name = tm.team_name
+JOIN (
+    SELECT ps.player_ssn, COUNT(ps.player_ssn) AS `goals`
+    FROM `pleyer_scores` ps
+    GROUP BY ps.player_ssn
+) tot ON mpi.player_ssn = tot.player_ssn
 WHERE pl.player_name = 'Mehdi Torabi'
-GROUP BY mpi.team_name, pl.player_name
+GROUP BY mpi.team_name, pl.player_name, tot.goals
 ORDER BY pl.player_name
 
 -- ———————————–––––––––––––––(02)------------------------------------
-
-
 
 -- ———————————––––––––––––––(Team)-----------------------------------
 
