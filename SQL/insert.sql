@@ -104,9 +104,11 @@ VALUES
     (9087, 'Havadar', 'Perspolis', '2025-11-20', '2023-09-01', 400000),
     (7450, 'Sepahan', 'Peikan', '2025-07-01', '2024-07-01', 380000),
     (9873, 'Esteghlal', 'Sepahan', '2027-06-01', '2024-06-01', 270000),
+    (1836, 'Perspolis', 'Peikan', '2023-08-04', '2022-01-01', 25000),
     (1836, 'Perspolis', 'Perspolis', '2025-09-01', '2023-08-04', 0),
     (8071, 'Esteghlal', 'Esteghlal', '2028-01-01', '2024-08-20', DEFAULT),
-    (8087, 'Perspolis', 'San-at Naft', '2027-06-05', '2023-04-15', 310000);
+    (8087, 'San-at Naft', 'Havadar', '2023-04-15', '2022-08-15', 90000),
+    (8087, 'Perspolis', 'San-at Naft', '2027-06-05', '2023-04-18', 310000);
 
 -- ——————–––—————–––––––(Player Posts)-----------------------
 
@@ -215,7 +217,7 @@ VALUES
 INSERT INTO `match_Player_information`
 VALUES
     ('Azadi', '2024-08-23', 1836, 'Perspolis', 'GK', 7.0, 'NO'),
-    ('Azadi', '2024-08-23', 8087, 'Perspolis', 'RW', 8.6, DEFAULT),
+    ('Takhti', '2025-03-20', 8087, 'San-at Naft', 'RW', 8.6, DEFAULT),
     ('Azadi', '2024-08-23', 8071, 'Esteghlal', 'LB', 7.8, 'NO'),
     ('Azadi', '2024-08-23', 9873, 'Esteghlal', 'GK', 7.5, 'NO'),
     ('Azadi', '2025-02-25', 8071, 'Esteghlal', 'LB', 7.2, DEFAULT),
@@ -250,7 +252,6 @@ VALUES
 
 INSERT INTO `substitution`
 VALUES
-    (1836, 8087, 'Azadi', '2024-08-23', 'Perspolis', '00:51:06'),
     (9873, 8071, 'Azadi', '2024-08-23', 'Esteghlal', '00:58:32'),
     (9873, 8071, 'Azadi', '2025-02-25', 'Esteghlal', '00:47:30'),
     (8087, 1836, 'Azadi', '2025-02-25', 'Perspolis', '00:54:52'),
@@ -271,8 +272,6 @@ VALUES
 
 INSERT INTO `pleyer_scores`
 VALUES   
-    ('Azadi', '2024-08-23', 8087, 'NO', '00:53:44'),
-    ('Azadi', '2024-08-23', 8087, 'NO', '01:16:44'),
     ('Azadi', '2024-08-23', 8071, 'YES', '00:31:18'),
     ('Naghsh-e-Jahan', '2024-07-12', 7450, 'NO', '00:08:35'),
     ('Naghsh-e-Jahan', '2024-07-12', 7450, 'NO', '00:41:27'),

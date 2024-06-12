@@ -3,8 +3,8 @@
 DROP DATABASE IF EXISTS `football_leagues`;
 CREATE DATABASE `football_leagues`;
 USE `football_leagues`;
-SET NAMES utf8 ;
-SET character_set_client = utf8mb4 ;
+SET NAMES utf8;
+SET character_set_client = utf8mb4;
 
 -- ———————————–––––––––––––––(League)--------------------------------
 
@@ -212,19 +212,6 @@ CREATE TABLE `match_player_information` (
     FOREIGN KEY (`player_ssn`) REFERENCES `player` (`player_ssn`),
     PRIMARY KEY (`player_ssn`, `match_stadium`, `match_date`)
 );
-
--- CREATE TABLE `substitution` (
---     `out_player` INT NOT NULL,
---     `in_player` INT NOT NULL,
---     `match_stadium` VARCHAR(50) NOT NULL,
---     `match_date` DATE NOT NULL,
---     `team_name` VARCHAR(50) NOT NULL,
---     `subs_time` TIME NOT NULL,
---     FOREIGN KEY (`team_name`, `match_stadium`, `match_date`) REFERENCES `match_team_information` (`team_name`, `match_stadium`, `match_date`),
---     FOREIGN KEY (`out_player`) REFERENCES `player` (`player_ssn`),
---     FOREIGN KEY (`in_player`) REFERENCES `player` (`player_ssn`),
---     PRIMARY KEY (`out_player`, `in_player`, `match_stadium`, `match_date`)
--- );
 
 CREATE TABLE `substitution` (
     `out_player` INT NOT NULL,

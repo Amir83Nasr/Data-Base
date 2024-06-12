@@ -3,6 +3,7 @@
 USE `football_leagues`;
 
 -- ———————————––––––––––––––(Game)-----------------------------------
+
 -- ———————————–––––––––––––––(01)------------------------------------
 -- ———————————–––––––––––––––(02)------------------------------------
 -- ———————————–––––––––––––––(03)------------------------------------
@@ -10,8 +11,40 @@ USE `football_leagues`;
 -- ———————————–––––––––––––––(05)------------------------------------
 
 -- ———————————–––––––––––––(Player)----------------------------------
+
+SELECT pl.player_name, mpi.team_name, COUNT(mpi.team_name) AS `games`, ROUND(AVG(mpi.player_rate), 1) AS `rate`
+, tot.out_team
+-- SELECT *
+FROM `match_player_information` mpi
+JOIN `player` pl ON mpi.player_ssn = pl.player_ssn
+JOIN (
+    SELECT pl.player_name, pl.player_salary, tr.out_team, tr.in_team, tr.in_date, tr.transfer_fee, tr.duration_agreement
+    FROM `player` pl
+    JOIN `transfer` tr ON pl.player_ssn = tr.player_ssn
+    WHERE pl.player_name = 'Mehdi Torabi'
+) tot ON pl.player_name = tot.player_name AND mpi.team_name = tot.in_team
+WHERE pl.player_name = 'Mehdi Torabi'
+GROUP BY mpi.team_name, tot.out_team
+
+SELECT pl.player_name, pl.player_salary, tr.out_team, tr.in_team, tr.in_date, tr.transfer_fee, tr.duration_agreement
+FROM `player` pl
+JOIN `transfer` tr ON pl.player_ssn = tr.player_ssn
+WHERE pl.player_name = 'Mehdi Torabi'
+
 -- ———————————–––––––––––––––(01)------------------------------------
+
+SELECT pl.player_name, mpi.team_name, COUNT(mpi.team_name) AS `games`, ROUND(AVG(mpi.player_rate), 1) AS `rate`
+-- SELECT *
+FROM `match_player_information` mpi
+JOIN `player` pl ON mpi.player_ssn = pl.player_ssn
+-- JOIN `pleyer_scores` ps ON mpi.player_ssn = ps.player_ssn
+WHERE pl.player_name = 'Mehdi Torabi'
+GROUP BY mpi.team_name, pl.player_name
+ORDER BY pl.player_name
+
 -- ———————————–––––––––––––––(02)------------------------------------
+
+
 
 -- ———————————––––––––––––––(Team)-----------------------------------
 
@@ -135,7 +168,7 @@ FROM `player` pl
 JOIN `player_cards` pc ON pl.player_ssn = pc.player_ssn
 WHERE pc.card_color = 'Yellow'
 GROUP BY pl.player_ssn
-HAVING COUNT(pc.card_color) >= 1
+HAVING COUNT(pc.card_color) >= 1 -- pc.card_color >= 3
 UNION
 SELECT pl.player_name AS `name`, pl.team_name AS `team`, 'Red Card' AS `because of`
 FROM `player` pl
