@@ -4,14 +4,62 @@ USE `football_leagues`;
 
 -- ———————————––––––––––––––(Game)-----------------------------------
 
-SELECT *
+SELECT mpi.team_name, pl.player_name, pl.player_number, mpi.player_post
 FROM `match_player_information` mpi
-
+JOIN `player` pl ON mpi.player_ssn = pl.player_ssn
+WHERE (mpi.match_date = '2025-02-25') AND ( mpi.match_stadium = 'Azadi')
+ORDER BY pl.team_name, pl.player_name
 
 -- ———————————–––––––––––––––(01)------------------------------------
+
+-- SELECT *
+SELECT mti.team_name, mti.hosting_status, mti.team_arrange, mti.goals_score, mti.goals_concede, yel.yellow_cards, red.red_cards
+FROM `match_team_information` mti
+LEFT JOIN (
+    SELECT pc.match_date, pc.match_stadium, COUNT(pc.card_color) AS `yellow_cards`, pl.team_name
+    FROM `player_cards` pc
+    JOIN `player` pl ON pc.player_ssn = pl.player_ssn
+    WHERE (pc.match_date = '2025-02-25') AND (pc.match_stadium = 'Azadi') AND (pc.card_color = 'yellow')
+    GROUP BY pc.match_date, pc.match_stadium, pl.team_name
+) yel ON (mti.match_date = yel.match_date) AND (mti.match_stadium = yel.match_stadium) AND (mti.team_name = yel.team_name)
+LEFT JOIN (
+    SELECT pc.match_date, pc.match_stadium, COUNT(pc.card_color) AS `red_cards`, pl.team_name
+    FROM `player_cards` pc
+    JOIN `player` pl ON pc.player_ssn = pl.player_ssn
+    WHERE (pc.match_date = '2025-02-25') AND (pc.match_stadium = 'Azadi') AND (pc.card_color = 'red')
+    GROUP BY pc.match_date, pc.match_stadium, pl.team_name
+) red ON (mti.match_date = red.match_date) AND (mti.match_stadium = red.match_stadium) AND (mti.team_name = red.team_name)
+WHERE (mti.match_date = '2025-02-25') AND (mti.match_stadium = 'Azadi')
+
 -- ———————————–––––––––––––––(02)------------------------------------
+
+-- SELECT *
+SELECT pl.team_name, pl.player_name, pl.player_number, mpi.player_post, ps.penalty, ps.score_time
+FROM `pleyer_scores` ps
+JOIN `player` pl ON ps.player_ssn = pl.player_ssn
+JOIN `match_player_information` mpi ON ps.player_ssn = mpi.player_ssn
+WHERE (ps.match_date = '2025-02-25') AND (ps.match_stadium = 'Azadi') AND (mpi.match_date = '2025-02-25') AND (mpi.match_stadium = 'Azadi')
+ORDER BY ps.score_time, pl.team_name
+
 -- ———————————–––––––––––––––(03)------------------------------------
+-- SELECT *
+SELECT pl.team_name, pl.player_name, pl.player_number, pc.card_color, pc.card_time
+FROM `player_cards` pc
+JOIN `player` pl ON pc.player_ssn = pl.player_ssn
+JOIN `match_player_information` mpi ON pc.player_ssn = mpi.player_ssn
+WHERE (pc.match_date = '2025-02-25') AND (pc.match_stadium = 'Azadi') AND (mpi.match_date = '2025-02-25') AND (mpi.match_stadium = 'Azadi')
+ORDER BY pc.card_time, pl.player_name
+
 -- ———————————–––––––––––––––(04)------------------------------------
+
+-- SELECT *
+SELECT sb.team_name, pil.player_name AS in_player, pol.player_name AS out_player, sb.subs_time
+FROM `substitution` sb
+JOIN `player` pil ON sb.in_player = pil.player_ssn
+JOIN `player` pol ON sb.out_player = pol.player_ssn
+WHERE (sb.match_date = '2025-02-25') AND (sb.match_stadium = 'Azadi')
+ORDER BY sb.subs_time
+
 -- ———————————–––––––––––––––(05)------------------------------------
 
 -- ———————————–––––––––––––(Player)----------------------------------
@@ -35,8 +83,8 @@ GROUP BY mpi.team_name, pl.player_name, tot.player_salary, tot.out_team, tot.in_
 
 -- ———————————–––––––––––––––(01)------------------------------------
 
-SELECT pl.player_name, tm.league_name, mpi.team_name, COUNT(mpi.team_name) AS `games`, ROUND(AVG(mpi.player_rate), 1) AS `rate`, tot.goals, MIN(mpi.match_date) AS first_play_date, MAX(mpi.match_date) AS last_play_date
 -- SELECT *
+SELECT pl.player_name, tm.league_name, mpi.team_name, COUNT(mpi.team_name) AS `games`, ROUND(AVG(mpi.player_rate), 1) AS `rate`, tot.goals, MIN(mpi.match_date) AS first_play_date, MAX(mpi.match_date) AS last_play_date
 FROM `match_player_information` mpi
 JOIN `player` pl ON mpi.player_ssn = pl.player_ssn
 JOIN `team` tm ON mpi.team_name = tm.team_name

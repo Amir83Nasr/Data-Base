@@ -166,7 +166,7 @@ VALUES
 INSERT INTO `match`                                       
 VALUES
     ('Perspolis', 'Esteghlal', 'Azadi', '2024-08-23', '2-2', 5, 1),
-    ('Esteghlal', 'Perspolis', 'Azadi', '2025-02-25', '0-1', 23, 6),
+    ('Esteghlal', 'Perspolis', 'Azadi', '2025-02-25', '1-2', 23, 6),
     ('Sepahan', 'Peikan', 'Naghsh-e-Jahan', '2024-07-12', '3-0', 2, 9),
     ('Peikan', 'Sepahan', 'Shohada', '2024-11-04', '0-0', 14, 4),
     ('Havadar', 'San-at Naft', 'Shahid Dast-gerdi', '2024-10-06', '1-1', 12, 9),
@@ -198,8 +198,8 @@ INSERT INTO `match_team_information`
 VALUES
     ('Azadi', '2024-08-23', 'Perspolis', 'Home', '4-3-1-2', 2, 2, 58, DEFAULT),
     ('Azadi', '2024-08-23', 'Esteghlal', 'Away', '4-3-3', 2, 2, 35, NULL),
-    ('Azadi', '2025-02-25', 'Esteghlal', 'Home', '4-3-3', 0, 1, 35, 'Yellow'),
-    ('Azadi', '2025-02-25', 'Perspolis', 'Away', '4-3-1-3', 1, 0, 58, NULL),
+    ('Azadi', '2025-02-25', 'Esteghlal', 'Home', '4-3-3', 1, 2, 35, 'Yellow'),
+    ('Azadi', '2025-02-25', 'Perspolis', 'Away', '4-3-1-3', 2, 1, 58, NULL),
     ('Naghsh-e-Jahan', '2024-07-12', 'Sepahan', 'Home', '4-4-2', 3, 0, 91, NULL),
     ('Naghsh-e-Jahan', '2024-07-12', 'Peikan', 'Away', '3-5-2', 0, 3, 14, 'Yellow'),
     ('Shohada', '2024-11-04', 'Peikan', 'Home', '3-5-2', 0, 0, 14, NULL),
@@ -273,6 +273,9 @@ VALUES
 INSERT INTO `pleyer_scores`
 VALUES   
     ('Azadi', '2024-08-23', 8071, 'YES', '00:31:18'),
+    ('Azadi', '2025-02-25', 8087, 'NO', '00:43:11'),
+    ('Azadi', '2025-02-25', 8087, 'NO', '01:01:21'),
+    ('Azadi', '2025-02-25', 8071, 'NO', '01:29:01'),
     ('Naghsh-e-Jahan', '2024-07-12', 7450, 'NO', '00:08:35'),
     ('Naghsh-e-Jahan', '2024-07-12', 7450, 'NO', '00:41:27'),
     ('Shahid Dast-gerdi', '2024-10-06', 1153, 'YES', '01:07:22'),
