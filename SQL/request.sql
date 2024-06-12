@@ -25,9 +25,9 @@ ORDER BY mch.match_date DESC
 -- todo———————————–––––––––––––––(02)------------------------------------
 
 SELECT tm.team_name, pl.player_number, pl.player_name, pl.player_age, pl.player_salary, tr.in_date, tr.out_team, tr.transfer_fee, tr.duration_agreement
-FROM `team` tm
-JOIN `player` pl ON tm.team_name = pl.team_name
-JOIN `transfer` tr ON pl.player_ssn = tr.player_ssn
+FROM `player` pl
+JOIN  `team` tm ON tm.team_name = pl.team_name
+LEFT JOIN `transfer` tr ON pl.player_ssn = tr.player_ssn
 -- WHERE tm.team_name = 'Perspolis'
 ORDER BY tm.team_name, tr.in_date DESC, pl.player_name
 
@@ -49,10 +49,58 @@ ORDER BY tm.team_name, st.staff_name
 -- ———————————–––––––––––––––(05)------------------------------------
 
 -- ———————————––––––––––––(Transfer)---------------------------------
+
+SELECT pl.player_name, pl.player_age, pl.player_salary, tr.out_team, tr.transfer_fee, tr.in_team, tr.in_date, tr.duration_agreement
+FROM `team` tm
+JOIN `player` pl ON tm.team_name = pl.team_name
+JOIN `transfer` tr ON tr.player_ssn = pl.player_ssn
+-- WHERE tr.in_team = 'Perspolis'
+ORDER BY tr.in_date DESC, pl.player_name
+
 -- ———————————–––––––––––––––(01)------------------------------------
+
+SELECT pl.player_name, pl.player_age, pl.player_salary, tr.out_team, tr.transfer_fee, tr.in_team, tr.in_date, tr.duration_agreement
+FROM `team` tm
+JOIN `player` pl ON tm.team_name = pl.team_name
+JOIN `transfer` tr ON tr.player_ssn = pl.player_ssn
+-- WHERE tr.in_date BETWEEN '2023-01-01' AND '2024-01-01'
+ORDER BY tr.in_date DESC, pl.player_name;
+
 -- ———————————–––––––––––––––(02)------------------------------------
+
+SELECT st.staff_name, st.staff_age, st.staff_job, st.staff_salary, st.team_name, st.in_date, st.duration_agreement
+FROM `team` tm
+JOIN `staff` st ON tm.team_name = st.team_name
+-- WHERE st.in_date BETWEEN '2021-01-01' AND '2023-01-01'
+ORDER BY st.in_date DESC, st.staff_name;
+
 -- ———————————–––––––––––––––(03)------------------------------------
+
+SELECT tm.team_name, SUM(pl.player_salary) AS `price_to_players`
+FROM `team` tm
+JOIN `player` pl ON tm.team_name = pl.team_name
+GROUP BY tm.team_name
+ORDER BY SUM(pl.player_salary) DESC;
+
 -- ———————————–––––––––––––––(04)------------------------------------
+
+SELECT tot.team_name, SUM(tot.salary) AS `salary`, 'coach & staffs' AS `price_to`
+FROM (
+    SELECT tm.team_name, SUM(st.staff_salary) AS `salary`, 'staffs' AS `price_to`
+    FROM `team` tm
+    JOIN `staff` st ON tm.team_name = st.team_name
+    GROUP BY tm.team_name
+    -- ORDER BY `salary` DESC
+    UNION
+    SELECT tm.team_name, SUM(ch.coach_salary) AS `salary`, 'coach' AS `price_to`
+    FROM `team` tm
+    JOIN `coach` ch ON tm.team_name = ch.team_name
+    GROUP BY tm.team_name
+    -- ORDER BY `salary` DESC
+    ) tot
+GROUP BY tot.team_name
+ORDER BY `salary` DESC;
+
 -- ———————————–––––––––––––––(05)------------------------------------
 
 -- ———————————–––––––––––––(League)----------------------------------
@@ -87,18 +135,18 @@ FROM `player` pl
 JOIN `player_cards` pc ON pl.player_ssn = pc.player_ssn
 WHERE pc.card_color = 'Yellow'
 GROUP BY pl.player_ssn
-HAVING COUNT(pc.card_color) >= 0
+HAVING COUNT(pc.card_color) >= 1
 UNION
 SELECT pl.player_name AS `name`, pl.team_name AS `team`, 'Red Card' AS `because of`
 FROM `player` pl
 JOIN `player_cards` pc ON pl.player_ssn = pc.player_ssn
-WHERE pc.card_color = 'Red'
+WHERE pc.card_color = 'Red';
 
 
 SELECT pl.player_name AS `name`, pl.team_name AS `team`, mp.player_injury AS `injury`, pc.card_color AS `card`, pc.card_time AS `time`, mch.week_of_league AS `week`, mch.home_team AS `home`, mch.away_team AS `away`
 FROM `player` pl
 JOIN `player_cards` pc ON pl.player_ssn = pc.player_ssn
 JOIN `match` mch ON pc.match_stadium = mch.stadium_name AND pc.match_date = mch.match_date
-JOIN `match_player_information` mp ON pl.player_ssn = mp.player_ssn
+JOIN `match_player_information` mp ON pl.player_ssn = mp.player_ssn;
 
 -- ———————————–––––––––––––––(04)------------------------------------
