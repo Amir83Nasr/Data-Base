@@ -31,7 +31,6 @@ LEFT JOIN (
 ) red ON (mti.match_date = red.match_date) AND (mti.match_stadium = red.match_stadium) AND (mti.team_name = red.team_name)
 WHERE (mti.match_date = '2025-02-25') AND (mti.match_stadium = 'Azadi')
 
-
 -- ———————————–––––––––––––––(02)------------------------------------
 
 -- SELECT *
