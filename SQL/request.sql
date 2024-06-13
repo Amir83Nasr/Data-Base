@@ -2,8 +2,6 @@
 
 USE `football_leagues`;
 
--- Yasin
-
 -- ———————————––––––––––––––(Game)-----------------------------------
 
 SELECT mpi.team_name, pl.player_name, pl.player_number, mpi.player_post
